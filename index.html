@@ -4,12 +4,15 @@
   <meta charset="utf-8">
   <title>eZdravje :: 4. DN :: OIS 2017/2018</title>
   <link href="knjiznice/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="knjiznice/css/style.css">
   <style>
-    body {padding-top: 70px;}
+    body {padding-top: 70px; font-family: monospace;}
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <script src="knjiznice/js/jquery-2.2.3.min.js"></script>
   <script src="knjiznice/js/bootstrap.min.js"></script>
   <script src="knjiznice/js/koda.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOfjETD_sgTff-FKe3DPLi-SzVPyygeM4&libraries=places"></script>
 </head>
 <body>
 
@@ -22,14 +25,14 @@
           <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
         </button>
         <!-- ZAČETEK: Ime vaše aplikacije -->
-        <a class="navbar-brand" href="index.html">{ime vaše aplikacije}</a>
+        <a class="navbar-brand" href="index.html">{ime  aplikacije}</a>
         <!-- KONEC: Ime vaše aplikacije -->
       </div>
       <div class="collapse navbar-collapse" id="menujska-vrstica">
         <ul class="nav navbar-nav">
           <li><a href="opis.html">Opis ideje</a></li>
           <li><a href="nacrt.html">Načrt informacijske rešitve</a></li>
-          <li><a href="#">Generiranje podatkov</a></li>
+          <li><a href="#" onclick="generirajTri();">Generiranje podatkov</a></li>
         </ul>
       </div>
     </div>
@@ -40,11 +43,53 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center">
-        <p class="lead"><strong>TO-DO</strong>: Na tem mestu implementirajte vašo aplikacijo.</p>
+        <div id = "createNewPatient" style="text-align:left;">
+          <p class="lead">Kreiraj EHR zapis za novega bolnika</p>
+          <form>
+           Ime: <input class ="inputText" type="text" id="ime" placeholder="Vnesite vaše ime"><br>
+           Priimek: <input class ="inputText" type="text" id="priimek" placeholder="Vnesite vaš priimek"><br>
+           Datum Rojstva: <input class ="inputText" type="text" id="datum_rojstva" placeholder="LLLL-MM-DD"><br>
+             <input class ="inputText" type="button" value="Dodaj osnovne podatke o novem bolniku" onclick="createNewPatient();">
+          </form>
+        </div>
+        <p id="databaseResponse" style="text-align:left;"></p>
+        <div class="analyseClinicalData" style="text-align:left; padding-1top:40px;">
+          <p class="lead">Dodajte klinične podatke</p>
+          <form>
+            EhrId: <input class ="inputText" type="text" id="ehrId" placeholder="Kopirajte vaš EhrId"><br>
+            Telesna teža: <input class ="inputText" type="text" id="weight" placeholder="kg"><br>
+            Telesna višina: <input class ="inputText" type="text" id="height" placeholder="cm"><br>
+            Sistolični tlak: <input class ="inputText" type="text" id="sistolic" placeholder="mmHg"><br>
+            Diastolični tlak: <input class ="inputText" type="text" id="diastolic" placeholder="mmHg"><br>
+             <input class ="inputText" type="button" value="Obdelaj klinične podatke" onclick="analyseClinicalData();">
+          </form>
+          <p id="clinicalDataResponse"></p>
+        </div>
+        <div id="generiraniTrije"></div>
+        <div id="poisciPrimernoVadbo">
+        <p>Vnesite svoj EhrId in glede na vaše zadnje posodobljeno zdravstveno stanje vam priporočimo primerno fizično aktivnost</p>
+        <form>
+          <select id="selectEhrId" onclick = "zamenjaj();">
+            <option default value="">Izberite vzorčni ehrId</option>
+            <option id = "opt1" value="e09f1b8a-7bbf-4f68-8256-f27fc60befd6">Športni Lojze</option>
+            <option id = "opt2" value="2db0c4f9-f34f-4022-9b1d-c0dced2f09bb">Suha Mici</option>
+            <option id = "opt3" value="ceb90784-013b-44b8-a865-c076b5845b43">Debeli Jože</option>
+          </select><br>
+           EhrId: <input class ="inputText" type="text" id="ehrIdVadba" placeholder="Kopirajte vaš EhrId"><br>
+             <input class ="inputText" type="button" value="Bodi aktiven!" onclick="findPhysicalActivity();">
+        </form>
+        </div>
+        <div id="beActiveResponse" style="text-align:left; margin-top:50px;"></div>
+        <div id="sporociloZaUporabnika"></div>
+        <div id="map" style="height: 500px; width:900px; margin:20px;"></div>
+        <h4 id="grafiNaslov"></h4>
+       <canvas allign="center" id="myChartItm"  height="40px"></canvas>
+       <canvas allign="center" id="myChartSistolic" height="40px"></canvas>
+       <canvas allign="center" id="myChartDiastolic" height="40px"></canvas>
+       
       </div>
     </div>
   </div>
   <!-- KONEC: Vsebina aplikacije -->
-
 </body>
 </html>

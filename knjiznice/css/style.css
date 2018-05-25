@@ -1,0 +1,21 @@
+
+.inputText {
+    margin: 5px;
+}
+#generiraniTrije {
+    position:absolute;
+    top:50px;
+    right:50px;
+    text-align:left;
+    border-color:grey;
+}
+
+#poisciPrimernoVadbo {
+    position: absolute;
+    width:40%;
+    top:200px;
+    right: 0px;
+}
+#sporociloZaUporabnika {
+    text-align: left;
+}
