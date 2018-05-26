@@ -56,7 +56,7 @@
         <div class="analyseClinicalData" style="text-align:left; padding-1top:40px;">
           <p class="lead">Dodajte klinične podatke</p>
           <form>
-            EhrId: <input class ="inputText" type="text" id="ehrId" placeholder="Kopirajte vaš EhrId"><br>
+            EhrId: <input class ="inputText" type="text" id="ehrId" placeholder="Kopirajte EhrId"><br>
             Telesna teža: <input class ="inputText" type="text" id="weight" placeholder="kg"><br>
             Telesna višina: <input class ="inputText" type="text" id="height" placeholder="cm"><br>
             Sistolični tlak: <input class ="inputText" type="text" id="sistolic" placeholder="mmHg"><br>
@@ -67,7 +67,7 @@
         </div>
         <div id="generiraniTrije"></div>
         <div id="poisciPrimernoVadbo">
-        <p>Vnesite svoj EhrId in glede na vaše zadnje posodobljeno zdravstveno stanje vam priporočimo primerno fizično aktivnost</p>
+        <p>Vnesite EhrId in glede na zadnje posodobljeno zdravstveno stanje vam priporočimo primerno aktivnost</p>
         <form>
           <select id="selectEhrId" onclick = "zamenjaj();">
             <option default value="">Izberite vzorčni ehrId</option>
@@ -75,7 +75,7 @@
             <option id = "opt2" value="2db0c4f9-f34f-4022-9b1d-c0dced2f09bb">Suha Mici</option>
             <option id = "opt3" value="ceb90784-013b-44b8-a865-c076b5845b43">Debeli Jože</option>
           </select><br>
-           EhrId: <input class ="inputText" type="text" id="ehrIdVadba" placeholder="Kopirajte vaš EhrId"><br>
+           EhrId: <input class ="inputText" type="text" id="ehrIdVadba" placeholder="Kopirajte EhrId"><br>
              <input class ="inputText" type="button" value="Bodi aktiven!" onclick="findPhysicalActivity();">
         </form>
         </div>
@@ -83,10 +83,12 @@
         <div id="sporociloZaUporabnika"></div>
         <div id="map" style="height: 500px; width:900px; margin:20px;"></div>
         <h4 id="grafiNaslov"></h4>
-       <canvas allign="center" id="myChartItm"  height="40px"></canvas>
-       <canvas allign="center" id="myChartSistolic" height="40px"></canvas>
-       <canvas allign="center" id="myChartDiastolic" height="40px"></canvas>
-       
+        <div id="itmC">
+      
+       </div>
+       <div id="sisC">
+       </div>
+       <div id="diasC">
       </div>
     </div>
   </div>

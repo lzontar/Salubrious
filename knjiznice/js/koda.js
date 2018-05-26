@@ -238,6 +238,7 @@ function findPhysicalActivity() {
     $("ehrIdVadba").val('');
 }
 
+var stevec = 0;
 function najdiFizicnoAktivnost(ehrId) {
     if(!ehrId || ehrId.length == 0) {
         $("#beActiveResponse").val("Prosim vnesite ehrId.");
@@ -283,9 +284,12 @@ function najdiFizicnoAktivnost(ehrId) {
                                             $("#beActiveResponse").append("<p>Telesna teža: <strong id='tezaIzracun'>" + teza[i].weight + " kg </strong><br> Telesna višina: <strong id = 'visinaIzracun'>" + visina[i].height +" cm</strong><br>Krvni tlak: <strong id='krvniTlakIzracun'>"+ krvniTlak[i].systolic+" / "+ krvniTlak[i].diastolic +" mm[hg]</strong></p>")
                                             initMap();
                                             $("#grafiNaslov").html("<br>Grafično primerjani pacientovi podatki z idealnim zdravstvenim stanjem<br>");
+                                            resetCanvas();
                                             graphItm();
                                             graphSistolic();
                                             graphDiastolic();
+                                            stevec++;
+                                            
                                     }
                                 }
                             
@@ -430,11 +434,11 @@ function graphItm() {
     console.log(itm);
     var chartItm = new Chart(ctx, {
         // The type of chart we want to create
-        type: 'bar',
+        type: 'horizontalBar',
     
         // The data for our dataset
         data: {
-            labels: ["Povprečni ITM", "Pacientov ITM"],
+            labels: ["Povprečni", "Pacientov"],
             datasets: [{
                 backgroundColor: ["#3e95cd", "#c45850"],
                 borderColor: 'rgb(255, 99, 132)',
@@ -444,12 +448,25 @@ function graphItm() {
     
         // Configuration options go here
         options: {
+            intersect: false,
+             maintainAspectRatio: true,
+            scales: {
+                xAxes: [{
+                  ticks: {
+                    beginAtZero: true,
+                    min: 0
+                  }    
+                }]
+              },
+            responsive: false,
             legend: { display: false },
       title: {
         display: true,
         text: 'Indeks telesne mase'
-      }}
+      }   
+        }
     });
+   
 }
 
 function graphSistolic() {
@@ -457,13 +474,13 @@ function graphSistolic() {
     var sistolicni = parseInt(krvniTlak[0]);
     console.log(sistolicni);
     var ctx = document.getElementById('myChartSistolic').getContext('2d');
-    var chartSistolicni = new Chart(ctx, {
+     var chartSistolicni = new Chart(ctx, {
         // The type of chart we want to create
-        type: 'bar',
+        type: 'horizontalBar',
     
         // The data for our dataset
         data: {
-            labels: ["Povprečni sistolični krvni tlak", "Pacientov sistolični krvni tlak"],
+            labels: ["Povprečni", "Pacientov"],
             datasets: [{
                 backgroundColor: ["#3e95cd", "#c45850"],
                 borderColor: 'rgb(255, 99, 132)',
@@ -473,14 +490,25 @@ function graphSistolic() {
     
         // Configuration options go here
         options: {
+            intersect: false,
+             maintainAspectRatio: true,
+            scales: {
+                xAxes: [{
+                  ticks: {
+                    beginAtZero: true,
+                    min: 0
+                  }    
+                }]
+              },
+            responsive: false,
             legend: { display: false },
       title: {
         display: true,
         text: 'Sistolični krvni tlak'
       }
+      
         }
     });
-     
 }
 
 function graphDiastolic() {
@@ -488,13 +516,14 @@ function graphDiastolic() {
     var diastolicni = parseInt(krvniTlak[1]);
     console.log(diastolicni);
     var ctx = document.getElementById('myChartDiastolic').getContext('2d');
-     var chartDiastolicni = new Chart(ctx, {
+      var chartDiastolicni = new Chart(ctx, {
         // The type of chart we want to create
-        type: 'bar',
+        
+        type: 'horizontalBar',
     
         // The data for our dataset
         data: {
-            labels: ["Povprečni diastolični krvni tlak", "Pacientov diastolični krvni tlak"],
+            labels: ["Povprečni", "Pacientov"],
             datasets: [{
                 backgroundColor: ["#3e95cd", "#c45850"],
                 borderColor: 'rgb(255, 99, 132)',
@@ -504,7 +533,17 @@ function graphDiastolic() {
     
         // Configuration options go here
         options: {
-            
+            intersect: false,
+            maintainAspectRatio: true,
+            scales: {
+                xAxes: [{
+                  ticks: {
+                    beginAtZero: true,
+                    min: 0
+                  }    
+                }]
+              },
+            responsive: false,
             legend: { display: false },
       title: {
         display: true,
@@ -514,20 +553,11 @@ function graphDiastolic() {
     });
 }
 
-function narisiGraf(){
-    var BMR = 20;
-	var ctx = document.getElementById('myChart').getContext('2d');
-	var myBarChart = new Chart(ctx, {
-    type: 'horizontalBar',
-    data: {
-    	labels: ["Bazalni metabolizem"],
-        datasets: [{
-            label: "BMR",
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [BMR],
-        }]
-    },
-    options: {}
-});
+function resetCanvas() {
+    $("#itmC").html("");
+    $("#sisC").html("");
+    $("#diasC").html("");
+    $("#itmC").html('<canvas id="myChartItm" width="800" height="150"></canvas>');
+    $("#sisC").html('<canvas id="myChartSistolic" width="800" height="150"></canvas>')
+    $("#diasC").html('<canvas id="myChartDiastolic" width="800" height="150"></canvas>')
 }
