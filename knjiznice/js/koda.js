@@ -157,13 +157,13 @@ function change() {
             sist= 120;
             dias= 80;
             break;
-        case "option2":
+        case "option3":
             teza=140;
             visina=195;
             sist= 160;
             dias= 95;
             break;
-        case "option3":
+        case "option2":
             teza=60;
             visina=205;
             sist= 115;
