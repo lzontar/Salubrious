@@ -45,7 +45,7 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Opis ideje, ki jo aplikacija podpira -->
-            <p><strong>TO-DO</strong>: Na tem mestu je potrebno dodati <strong>osnovni opis ideje rešitve</strong> (kakšen je osnovni SCENARIJ UPORABE, KDO je ciljna publika, za kakšen NAMEN se aplikacija uporablja).</p><p class="text-muted">Opis naj ne bo daljši od 200 besed.</p>
+            <p>Aplikacija podpira vnašanje in črpanje podatkov na podlagi bolnikovega EhrId-ja in glede na zadnje dodano zdravstveno stanje priporoči bolniku aktivnost(načeloma fizično, razen v posebnih scenarijih). Če ima bolnik prenizek ali previsek pritisk, ki meji ali pa je znotraj meja hipotenzije/hipertenzije, se na GoogleMaps prikažejo najbližje bolnišnice, kjer lahko poišče pomoč. Sicer pa se preveri že indeks telesne mase. Če ta indicira podhranjenost nam poišče restavracijo, če indicira normalno težo nam poišče telovadnico oz. fitnes, sicer pa poišče park, v katerem se lahko mirno sprehodimo.</p>
             <!-- KONEC: Opis ideje, ki jo aplikacija podpira -->
           </div>
         </div>
@@ -55,7 +55,11 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Uporabljeni zunanji viri podatkov -->
-            <p><strong>TO-DO</strong>: Na tem mestu je potrebno navesti zunanji vir podatkov (URL naslov), na kakšen način ste ga uporabili (neposredni API klic, uvožena statična datoteka ipd.) in kaj je bil namen uporabe (kako se vključuje v osnovno idejo aplikacije).</p>
+            <p>Zunanji vir: <a href="https://cloud.google.com/maps-platform/">GoogleMaps</a><br>
+              V index.html sem vstavil povezavo na JavaScript kodo: <br>
+                https://maps.googleapis.com/maps/api/js?key=AIzaSyCOfjETD_sgTff-FKe3DPLi-SzVPyygeM4&libraries=places<br>
+            Namen uporabe: API sem uporabil, da bi prikazal bolniku bližnje objekte primernega tipa(park, gym, hospital, restaurant)<br>
+            </p>
             <!-- KONEC: Uporabljeni zunanji viri podatkov -->
           </div>
         </div>
@@ -65,7 +69,7 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Master/detail načrtovalski vzorec -->
-            <p><strong>TO-DO</strong>: Na tem mestu morate navesti uporabljen master/detail načrtovalski vzorec in na kakšen način ga nameravate uporabiti.</p>
+            <p>Master/detail načrtovalski vzorec, ki sem ga uporabil se pojavi pri treh vzorčnih bolnikih, kjer se nam na mestu, kjer bi morali kopirati EhrId, ob izbiri v Select elementu, sama izpiše EhrId izbranega vzorčnega bolnika.</p>
             <!-- KONEC: Master/detail načrtovalski vzorec -->
           </div>
         </div>
@@ -75,7 +79,7 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Uporabljeni zunanji viri podatkov -->
-            <p><strong>TO-DO</strong>: Na tem mestu je potrebno navesti uporabljeno tehniko vizualizacije podatkov (za pomoč lahko uporabite primer iz <a href="https://github.com/mbostock/d3/wiki/Gallery" target="_blank">D3.js galerije</a>) in zakaj je bila ta tehnika izbrana.</p>
+            <p>Uporabil sem tehniko <a href="https://www.chartjs.org/">Chart.js</a>, saj se mi je zdela tehnika obenem preprosta in učinkovita za prikaz večih zdravstvenih podatkov.</p>
             <!-- KONEC: Uporabljeni zunanji viri podatkov -->
           </div>
         </div>

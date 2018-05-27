@@ -30,7 +30,7 @@ function getSessionId() {
  * @param stPacienta zaporedna številka pacienta (1, 2 ali 3)
  * @return ehrId generiranega pacienta
  */
-function generirajPodatke(stPacienta) {
+function generirajTri(stPacienta) {
   var teza;
   var visina;
   var diastolicni;
@@ -108,11 +108,11 @@ function generirajPodatke(stPacienta) {
         });    
 }
 
-function generirajTri() {
+function generirajPodatke() {
     $("#generiraniTrije").text("");
     $("#generiraniTrije").html("<h3>Vzorčni primeri:</h3>");
     for(var i = 1; i <= 3; i++) {
-        generirajPodatke(i);
+        generirajTri(i);
     }
 }
 
@@ -238,7 +238,6 @@ function findPhysicalActivity() {
     $("ehrIdVadba").val('');
 }
 
-var stevec = 0;
 function najdiFizicnoAktivnost(ehrId) {
     if(!ehrId || ehrId.length == 0) {
         $("#beActiveResponse").val("Prosim vnesite ehrId.");
@@ -288,7 +287,6 @@ function najdiFizicnoAktivnost(ehrId) {
                                             graphItm();
                                             graphSistolic();
                                             graphDiastolic();
-                                            stevec++;
                                             
                                     }
                                 }
@@ -340,10 +338,10 @@ function initMap() {
                     radius: '500000',
                     keyword: type
                     };
-                  /*  var marker = new google.maps.Marker({
+                   var marker = new google.maps.Marker({
                           map: map,
-                          position: {position.coords.latitude, position.coords.longitude}
-                      }); */
+                          position: {lat: position.coords.latitude, lng: position.coords.longitude}
+                      }); 
                 service = new google.maps.places.PlacesService(map);
                 service.nearbySearch(request, callback);
         });
@@ -373,6 +371,7 @@ function callback(results, status) {
                     };
                     
         service.nearbySearch(request, function(rez, status) {
+            console.log(request)
             for (var i = 0; i < rez.length; i++) {
                 if((JSON.stringify(rez[i].geometry.location)).localeCompare(JSON.stringify(mark.position)) == 0){
                     infowindow.setContent(rez[i].name);
