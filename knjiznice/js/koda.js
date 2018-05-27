@@ -408,12 +408,11 @@ function callback(results, status) {
         var request = {
                     location: pyrmont,
                     radius: '500000',
-                    type: type
+                    keyword: type
                     };
                     
         service.nearbySearch(request, function(rez, status) {
             for (var i = 0; i < rez.length; i++) {
-                console.log(JSON.stringify(rez[i].geometry.location)+"  "+JSON.stringify(mark.position));
                 if((JSON.stringify(rez[i].geometry.location)).localeCompare(JSON.stringify(mark.position)) == 0){
                     infowindow.setContent(rez[i].name);
                     infowindow.open(map, mark);
