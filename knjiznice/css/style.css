@@ -19,3 +19,9 @@
 #sporociloZaUporabnika {
     text-align: left;
 }
+#negativeResponse {
+    position: absolute;
+    top:360px;
+    right:100px;
+    text-align: left;
+}

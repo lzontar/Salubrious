@@ -212,10 +212,17 @@ function ustvariNovega(ime, priimek, datum_rojstva) {
                         if (party.action == 'CREATE') {
                             $("#databaseResponse").html("Vaš EhrId: " + ehrId );
                         }
-                    }
-                }); console.log(ehrId);
-            }
-        });
+                    },
+                    error: function(err) {
+	$("#databaseResponse").html("<span class='obvestilo label " +
+                    "label-danger fade-in'>Napaka!");
+                }}); 
+            },
+            error: function(err) {
+		            	$("#databaseResponse").html("<span class='obvestilo label " +
+                    "label-danger fade-in'>Napaka '" +
+                    JSON.parse(err.responseText).userMessage + "'!");
+        }});
     }
 }
 
@@ -270,79 +277,100 @@ function dodajKlinicnePodatke(ehrId, datum, sistolicni, diastolicni, visina, tez
                 if(!objavi) {
                     $("#clinicalDataResponse").text("Uspešno dodani podatki.");
                 }
-            }
-        });
+            },
+            error: function(err) {
+		            	$("#clinicalDataResponse").html("<span class='obvestilo label " +
+                    "label-danger fade-in'>Napaka '" +
+                    JSON.parse(err.responseText).userMessage + "'!");
+     }   });
     }
 }
 
 
 function findPhysicalActivity() {
     var ehrId = $("#ehrIdVadba").val();
+    if(ehrId.localeCompare("") == 0) {
+        $("#negativeResponse").html("Prosim vnesite ehrId.");
+    } else {
     najdiFizicnoAktivnost(ehrId);
-    $("ehrIdVadba").val('');
+    $("#ehrIdVadba").val("");
+    }
 }
 
 function najdiFizicnoAktivnost(ehrId) {
-    if(!ehrId || ehrId.length == 0) {
-        $("#beActiveResponse").val("Prosim vnesite ehrId.");
-    } else {
-        var sessionId = getSessionId();
-        $.ajax({
-            url: baseUrl + "/demographics/ehr/" + ehrId + "/party",
-            type: 'GET',
-            headers: {
-                "Ehr-Session": sessionId
-            },
-            success: function (data) {
-                var party = data.party;
-            }
-        });
-        $.ajax({
-            url: baseUrl + "/view/" + ehrId + "/weight",
-            type: 'GET',
-            headers: {
-                "Ehr-Session":sessionId
-            },
-            success: function (teza) {
-                 $.ajax({
-                     url: baseUrl + "/view/" + ehrId + "/height",
-                    type: 'GET',
-                    headers: {
-                        "Ehr-Session":sessionId
-                    },
-                    success: function (visina) {
-                         $.ajax({
-                            url: baseUrl + "/view/" + ehrId + "/blood_pressure",
-                            type: 'GET',
-                            headers: {
-                                "Ehr-Session":sessionId
-                            },
-                            success: function (krvniTlak) {
-                                for (var i in krvniTlak) {
-                                        if(i == 0) {
-                                            var tab=krvniTlak[i].time.split("T");
-                                            var datum = tab[0];
-                                            $("#beActiveResponse").text("");
-                                            $("#beActiveResponse").append("<h4>Vaši podatki na dan " + datum + ":</h4>");
-                                            $("#beActiveResponse").append("<p>Telesna teža: <strong id='tezaIzracun'>" + teza[i].weight + " kg </strong><br> Telesna višina: <strong id = 'visinaIzracun'>" + visina[i].height +" cm</strong><br>Krvni tlak: <strong id='krvniTlakIzracun'>"+ krvniTlak[i].systolic+" / "+ krvniTlak[i].diastolic +" mm[hg]</strong></p>")
-                                            initMap();
-                                            $("#grafiNaslov").html("<br>Grafično primerjani pacientovi podatki z idealnim zdravstvenim stanjem<br>");
-                                            resetCanvas();
-                                            graphItm();
-                                            graphSistolic();
-                                            graphDiastolic();
-                                            
-                                    }
+    var sessionId = getSessionId();
+    $.ajax({
+        url: baseUrl + "/demographics/ehr/" + ehrId + "/party",
+        type: 'GET',
+        headers: {
+            "Ehr-Session": sessionId
+        },
+        success: function (data) {
+            var party = data.party;
+        },
+        error: function(err) {
+		            	$("#negativeResponse").html("<span class='obvestilo label " +
+                    "label-danger fade-in'>Napaka '" +
+                    JSON.parse(err.responseText).userMessage + "'!");
+   }});
+    $.ajax({
+        url: baseUrl + "/view/" + ehrId + "/weight",
+        type: 'GET',
+        headers: {
+            "Ehr-Session":sessionId
+        },
+        success: function (teza) {
+             $.ajax({
+                 url: baseUrl + "/view/" + ehrId + "/height",
+                type: 'GET',
+                headers: {
+                    "Ehr-Session":sessionId
+                },
+                success: function (visina) {
+                     $.ajax({
+                        url: baseUrl + "/view/" + ehrId + "/blood_pressure",
+                        type: 'GET',
+                        headers: {
+                            "Ehr-Session":sessionId
+                        },
+                        success: function (krvniTlak) {
+                            for (var i in krvniTlak) {
+                                    if(i == 0) {
+                                        $("#negativeResponse").html("");
+                                        var tab=krvniTlak[i].time.split("T");
+                                        var datum = tab[0];
+                                        $("#beActiveResponse").text("");
+                                        $("#beActiveResponse").append("<h4>Vaši podatki na dan " + datum + ":</h4>");
+                                        $("#beActiveResponse").append("<p>Telesna teža: <strong id='tezaIzracun'>" + teza[i].weight + " kg </strong><br> Telesna višina: <strong id = 'visinaIzracun'>" + visina[i].height +" cm</strong><br>Krvni tlak: <strong id='krvniTlakIzracun'>"+ krvniTlak[i].systolic+" / "+ krvniTlak[i].diastolic +" mm[hg]</strong></p>")
+                                        initMap();
+                                        $("#grafiNaslov").html("<br>Grafično primerjani pacientovi podatki z idealnim zdravstvenim stanjem<br>");
+                                        resetCanvas();
+                                        graphItm();
+                                        graphSistolic();
+                                        graphDiastolic();
+                                        
                                 }
-                            
                             }
-                        }); 
-                    
-                    }
-                }); 
-            }
-        }); 
-    }
+                        },
+                        error: function(err) {
+        		            	$("#negativeResponse").html("<span class='obvestilo label " +
+                            "label-danger fade-in'>Napaka '" +
+                            JSON.parse(err.responseText).userMessage + "'!");
+                            }});
+                     
+                },
+               error: function(err) {
+		            	$("#negativeResponse").html("<span class='obvestilo label " +
+                    "label-danger fade-in'>Napaka '" +
+                    JSON.parse(err.responseText).userMessage + "'!");
+           } }); 
+        },
+        error: function(err) {
+		            	$("#negativeResponse").html("<span class='obvestilo label " +
+                    "label-danger fade-in'>Napaka '" +
+                    JSON.parse(err.responseText).userMessage + "'!");
+    }}); 
+    
 }
 var type;
 var problems;
