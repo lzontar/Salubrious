@@ -338,10 +338,7 @@ function initMap() {
                     radius: '500000',
                     keyword: type
                     };
-                   var marker = new google.maps.Marker({
-                          map: map,
-                          position: {lat: position.coords.latitude, lng: position.coords.longitude}
-                      }); 
+                  
                 service = new google.maps.places.PlacesService(map);
                 service.nearbySearch(request, callback);
         });
