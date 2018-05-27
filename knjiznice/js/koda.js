@@ -100,6 +100,7 @@ function generirajTri(stPacienta) {
                         if (party.action == 'CREATE') {
                             $("#generiraniTrije").append(ime + " " + priimek  +"  ||  " + ehrId + "<br>");
                             $("#opt"+stPacienta).val(ehrId);
+                            $("#option"+stPacienta).val(ehrId);
                              dodajKlinicnePodatke(ehr,datum,sistolicni,diastolicni,visina,teza,1);
                         }
                     }
@@ -130,6 +131,49 @@ function createNewPatient() {
 function zamenjaj() {
     var value = $("#selectEhrId").val();
     $("#ehrIdVadba").val(value);
+}
+
+function make() {
+    var value =$("#selectHim").val();
+    var imePriimek = $("#selectHim").children(":selected").text();
+    var ime = imePriimek.split(" ");
+    console.log(imePriimek +"  "+ime);
+    $("#ime").val(ime[0]);
+    $("#priimek").val(ime[1]);
+    $("#datum_rojstva").val(value);
+}
+function change() {
+    var value = $("#selectEhr").val();
+    $("#ehrId").val(value);
+    var option = $("#selectEhr").children(":selected").attr("id");
+    var sist;
+    var dias;
+    var visina;
+    var teza;
+    switch(option) {
+        case "option1":
+            teza=80;
+            visina=185;
+            sist= 120;
+            dias= 80;
+            break;
+        case "option2":
+            teza=140;
+            visina=195;
+            sist= 160;
+            dias= 95;
+            break;
+        case "option3":
+            teza=60;
+            visina=205;
+            sist= 115;
+            dias= 75;
+            break;
+    }
+    $("#weight").val(teza);
+    $("#height").val(visina);
+    $("#sistolic").val(sist);
+    $("#diastolic").val(dias);
 }
 
 function ustvariNovega(ime, priimek, datum_rojstva) {
@@ -364,7 +408,7 @@ function callback(results, status) {
         var request = {
                     location: pyrmont,
                     radius: '500000',
-                    keyword: type
+                    type: type
                     };
                     
         service.nearbySearch(request, function(rez, status) {
