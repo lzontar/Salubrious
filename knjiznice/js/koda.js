@@ -364,7 +364,7 @@ function callback(results, status) {
         var request = {
                     location: pyrmont,
                     radius: '500000',
-                    keyword: type
+                    type: type
                     };
                     
         service.nearbySearch(request, function(rez, status) {
